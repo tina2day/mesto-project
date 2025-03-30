@@ -1,3 +1,4 @@
+
 const initialCards = [
     {
       name: "Архыз",
@@ -24,3 +25,21 @@ const initialCards = [
       link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
     }
 ];
+
+function createCard(link, name, openImagePopup) {
+  const cardTemplate = document.querySelector('#card-template').content;
+  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+  const likeButton = cardElement.querySelector('.card__like-button');
+  const deleteButton = cardElement.querySelector('.card__delete-button');
+
+  likeButton.addEventListener('click', () => {
+      likeButton.classList.toggle('card__like-button_is-active');
+  });
+
+  deleteButton.addEventListener('click', () => {
+      cardElement.remove();
+  });
+
+  return cardElement;
+}
+export {initialCards, createCard};
