@@ -1,4 +1,5 @@
-import {initialCards, createCard} from './cards.js';
+import {createCard} from './cards.js';
+import {getCardsInformation, postNewCard, getUserInformation} from './server.js';
 import {enableValidation, hideInputError} from './validate.js';
 import {closeModal, openModal} from './modal.js';
 import '../pages/index.css';
@@ -12,8 +13,9 @@ const validationSettings = {
     inactiveButtonClass: 'popup__button_inactive',
     inputErrorClass: 'popup__input_type_error',
     errorClass: 'popup__input-error_active' 
-  }
-
+}
+getUserInformation();
+getCardsInformation();
 const avatarImage = document.querySelector('.profile__image');
 avatarImage.style.backgroundImage = `url(${avatar})`;
 const profilePopup = document.querySelector('.popup_type_edit');
@@ -81,25 +83,13 @@ addButton.addEventListener('click', () => {
 
 function handleCardFormSubmit(evt) {
     evt.preventDefault();
-    const newCard = createCard(cardUrl.value, cardName.value);
+    const newCard = createCard(cardUrl.value, cardName.value, 0, true);
+    postNewCard(cardName.value, cardUrl.value);
     cardContainer.prepend(newCard);
     closeModal(cardPopup);
 }
 
 cardFormElement.addEventListener('submit', handleCardFormSubmit);
 
-initialCards.forEach((cardData) => {
-    const newCard = createCard(cardData.link, cardData.name);
-    const cardImage = newCard.querySelector('.card__image');
-    const cardTitle = newCard.querySelector('.card__title');
-    cardImage.src = cardData.link;
-    cardImage.alt = cardData.name;
-    cardTitle.textContent = cardData.name;
-    cardImage.addEventListener('click', () => {
-        openImagePopup(cardData.link, cardData.name);
-    });
-    cardContainer.append(newCard);
-});
-
 enableValidation(validationSettings);
-export {validationSettings};
+export {validationSettings, openImagePopup, cardContainer, createCard};
