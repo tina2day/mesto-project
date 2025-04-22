@@ -14,7 +14,9 @@
   </header>
   <main class="content">
     <section class="profile page__section">
-      <div class="profile__image"></div>
+      <div class="profile__image">
+        <img src="<%=require('./images/edit.svg')%>" alt="Иконка редактирования" class="profile__image_overlay_icon">
+      </div>
       <div class="profile__info">
         <h1 class="profile__title">Жак-Ив Кусто</h1>
         <button class="profile__edit-button" type="button"></button>
@@ -64,6 +66,18 @@
       <img src="" alt="" class="popup__image">
       <p class="popup__caption"></p>
     </div>
+  </div>
+</div>
+
+<div class="popup popup_type_edit-image">
+  <div class="popup__content">
+    <button type="button" class="popup__close"></button>
+    <h3 class="popup__title">Обновить аватар</h3>
+    <form class="popup__form" name="edit-profile">
+      <input type="url" id="link-input-image" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+      <span style="color: red;" class="popup__input-error link-input-image-error"></span>
+      <button type="submit" class="button popup__button">Сохранить</button>
+    </form>
   </div>
 </div>
 

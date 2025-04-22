@@ -154,4 +154,4 @@ function updateAvatar(urlAvatar) {
         console.log(result);
       }).catch(err => console.log(err));
 }
-export{getCardsInformation, postNewCard, getUserInformation, deleteCard, putLike, deleteLike, userID};
+export{getCardsInformation, postNewCard, getUserInformation, deleteCard, putLike, deleteLike, userID, updateAvatar};

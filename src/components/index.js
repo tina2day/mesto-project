@@ -1,11 +1,12 @@
 import {createCard} from './cards.js';
-import {getCardsInformation, postNewCard, getUserInformation} from './server.js';
+import {getCardsInformation, postNewCard, getUserInformation, updateAvatar} from './server.js';
 import {enableValidation, hideInputError} from './validate.js';
 import {closeModal, openModal} from './modal.js';
 import '../pages/index.css';
 import avatar from '../images/avatar.jpg';
 
 const validationSettings = {
+    popupFormElementSelector: '.popup__form',
     popupElementSelector: '.popup',
     popupContentSelector: '.popup__content',
     inputSelector: '.popup__input',
@@ -21,6 +22,11 @@ avatarImage.style.backgroundImage = `url(${avatar})`;
 const profilePopup = document.querySelector('.popup_type_edit');
 const editButton = document.querySelector('.profile__edit-button');
 
+const imageProfilePopup = document.querySelector('.popup_type_edit-image');
+const editImage = document.querySelector('.profile__image_overlay_icon');
+const editImageUrl = imageProfilePopup.querySelector('.popup__input_type_url');
+const imageProfileFormElement = imageProfilePopup.querySelector('.popup__form');
+
 const cardPopup = document.querySelector('.popup_type_new-card');
 const addButton = document.querySelector('.profile__add-button');
 
@@ -33,6 +39,7 @@ const cardContainer = document.querySelector('.places__list');
 profilePopup.classList.add('popup_is-animated');
 cardPopup.classList.add('popup_is-animated');
 imagePopup.classList.add('popup_is-animated');
+imageProfilePopup.classList.add('popup_is-animated');
 
 function openImagePopup(link, name) {
     imageCardPopup.src = link;
@@ -80,6 +87,21 @@ addButton.addEventListener('click', () => {
     hideInputError(cardPopup, cardUrl, validationSettings);
     openModal(cardPopup);
 });
+
+function handleProfileImageSubmit(evt) {
+    evt.preventDefault();
+    avatarImage.style.backgroundImage = `url(${editImageUrl.value})`;
+    updateAvatar(editImageUrl.value);
+    closeModal(imageProfilePopup);
+}
+
+editImage.addEventListener('click', () => {
+    editImageUrl.value = avatar;
+    hideInputError(imageProfilePopup, editImageUrl, validationSettings);
+    openModal(imageProfilePopup);
+});
+
+imageProfileFormElement.addEventListener('submit', handleProfileImageSubmit);
 
 function handleCardFormSubmit(evt) {
     evt.preventDefault();
