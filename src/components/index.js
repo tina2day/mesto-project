@@ -83,9 +83,10 @@ addButton.addEventListener('click', () => {
 
 function handleCardFormSubmit(evt) {
     evt.preventDefault();
-    const newCard = createCard(cardUrl.value, cardName.value, 0, true);
-    postNewCard(cardName.value, cardUrl.value);
-    cardContainer.prepend(newCard);
+    postNewCard(cardName.value, cardUrl.value).then(res => {
+        const newCard = createCard(cardUrl.value, cardName.value, res.likes, true, res._id);
+        cardContainer.prepend(newCard);
+    });
     closeModal(cardPopup);
 }
 
