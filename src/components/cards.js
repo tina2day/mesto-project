@@ -1,5 +1,5 @@
-import { openImagePopup } from "./index.js";
-import { deleteCard, putLike, deleteLike, userID} from "./server.js";
+import {openImagePopup, userID} from "./index.js";
+import {deleteCard, putLike, deleteLike} from "./api.js"
 function createCard(link, name, likes, isBelonging, cardId) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
