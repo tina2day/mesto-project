@@ -1,7 +1,7 @@
 const config = {
-  baseUrl: 'https://nomoreparties.co/v1/apf-cohort-202',
-  authorization: 'c597d92d-5898-4bf5-baee-08b5177a1d55',
-  contentType: 'application/json'
+  baseUrl: "https://nomoreparties.co/v1/apf-cohort-202",
+  authorization: "c597d92d-5898-4bf5-baee-08b5177a1d55",
+  contentType: "application/json"
 }
 
 function checkImageUrl(url) {

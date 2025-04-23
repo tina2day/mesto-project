@@ -32,10 +32,7 @@ const imageCaptionPopup = imagePopup.querySelector('.popup__caption');
 
 const cardContainer = document.querySelector('.places__list');
 
-profilePopup.classList.add('popup_is-animated');
-cardPopup.classList.add('popup_is-animated');
-imagePopup.classList.add('popup_is-animated');
-imageProfilePopup.classList.add('popup_is-animated');
+const loadingIndicator = document.querySelector('.places__loading-indicator');
 
 let avatar = "";
 const avatarImage = document.querySelector('.profile__image');
@@ -60,22 +57,29 @@ getUserInformation().then(res => {
 }).then(res => avatarImage.style.backgroundImage = `url(${avatar})`);
 
 getCardsInformation().then(cards => {
-    cards.forEach((cardData) => {
+    loadingIndicator.style.display = 'block';
+    const checkPromises = cards.map((cardData, i) =>
       checkImageUrl(cardData.link)
-        .then(() => {
-          const newCard = createCard(
-            cardData.link,
-            cardData.name,
-            cardData.likes,
-            cardData.owner._id === userID,
-            cardData._id
-          );
-          cardContainer.append(newCard);
-        })
+        .then(() => ({ card: cardData, isValid: true }))
         .catch(err => {
-          console.warn(`Не удалось загрузить изображение: ${cardData.link}`, err);
-        });
-    });
+          console.log(`Не удалось загрузить изображение: ${cardData.link}`, err);
+          return { card: cardData, isValid: false };
+        })
+    );
+  
+    Promise.all(checkPromises).then(results => {
+      results.forEach(({ card, isValid }) => {
+        if (isValid) {
+          cardContainer.append(createCard(
+            card.link,
+            card.name,
+            card.likes,
+            card.owner._id === userID,
+            card._id
+          ));
+        }
+      });
+    }).finally(() => loadingIndicator.style.display = 'none');
   });
 
 function openImagePopup(link, name) {
