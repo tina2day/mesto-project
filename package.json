@@ -7,7 +7,7 @@
     "build": "webpack --mode production",
     "dev": "webpack serve",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist --repo https://github.com/tina2day/mesto-project.git"
   },
   "author": "Tinnikova Tatyana",
   "license": "ISC",
