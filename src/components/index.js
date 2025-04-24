@@ -1,6 +1,6 @@
 import {createCard} from './cards.js';
 import {getCardsInformation, postNewCard, getUserInformation, updateAvatar, checkImageUrl, saveUserInformation} from './api.js';
-import {enableValidation, hideInputError} from './validate.js';
+import {enableValidation, hideInputError, showInputError} from './validate.js';
 import {closeModal, openModal} from './modal.js';
 import '../pages/index.css';
 let userID = '';
@@ -117,6 +117,7 @@ function handleProfileFormSubmit(evt) {
 
 function handleProfileImageSubmit(evt) {
     evt.preventDefault();
+    hideInputError(imageProfilePopup, editImageUrl, validationSettings);
     const popupButton = imageProfileFormElement.querySelector('.popup__button');
     popupButton.textContent = "Сохранение...";
     avatar = editImageUrl.value;
@@ -126,7 +127,10 @@ function handleProfileImageSubmit(evt) {
             closeModal(imageProfilePopup);
     }).catch(err => {
         console.log(err);
-    }).finally(() => popupButton.textContent = "Сохранить");
+        showInputError(imageProfilePopup, editImageUrl, "Введённая ссылка некорректна", validationSettings);
+    }).finally(() => {
+        popupButton.textContent = "Сохранить";
+    });
 }
 
 function handleCardFormSubmit(evt) {
@@ -140,6 +144,7 @@ function handleCardFormSubmit(evt) {
         closeModal(cardPopup);
     }).catch(err => {
         console.log(err);
+        showInputError(cardPopup, cardUrl, "Введённая ссылка некорректна", validationSettings);
     }).finally(() => popupButton.textContent = "Сохранить");
     
 }

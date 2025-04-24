@@ -66,4 +66,4 @@ const enableValidation = (settings) => {
         setEventListener(popupElement, settings);
     });
 };
-export {enableValidation, hideInputError};
+export {enableValidation, hideInputError, showInputError};
